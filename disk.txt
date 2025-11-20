@@ -1,0 +1,96 @@
+#!/bin/bash
+#-----------------------------------------------------------
+#  TOPIC: Menu-Driven Disk Usage Viewer Using 'df' Command
+#
+#  WHAT IS THIS SCRIPT?
+#  - A bash menu that repeatedly shows options to view disk usage.
+#  - Uses the 'df' command with different flags:
+#       -h     : human readable sizes
+#       -B1    : sizes in bytes
+#       -i     : inode usage
+#       -T     : filesystem type
+#       --total: show total usage of all filesystems
+#
+#  WHAT DOES THE SCRIPT DO?
+#  - Displays a looped menu to the user.
+#  - Executes df commands based on user input.
+#  - Allows viewing specific filesystem usage.
+#  - Exits cleanly when the user selects option 7.
+#-----------------------------------------------------------
+
+while true              # Infinite loop until user chooses Exit
+do
+    clear               # Clear the terminal screen for clean menu view
+
+    echo "==============================="
+    echo " Disk Space Usage - DF Menu"
+    echo "==============================="
+    echo "1. Show disk usage in human-readable format (-h)" 
+    echo "2. Show disk usage in bytes (-B1)"
+    echo "3. Show inode usage (-i)"
+    echo "4. Show type of each filesystem (-T)"
+    echo "5. Show only a specific filesystem (e.g., /dev/sda1)"
+    echo "6. Show total disk usage across all filesystems (--total)" 
+    echo "7. Exit"
+    echo ""
+
+    read -p "Enter your choice: " choice   # Read user input
+
+    case $choice in                        # Start of case-based menu
+        1)
+            echo "Disk usage (Human-Readable):"
+            df -h                          # df with -h option
+            ;;
+        2)
+            echo "Disk usage in Bytes:"
+            df -B1                         # df output in bytes
+            ;;
+        3)
+            echo "Inode usage:"
+            df -i                          # Display inode statistics
+            ;;
+        4)
+            echo "Filesystem type information:"
+            df -T                          # Show filesystem types
+            ;;
+        5)
+            read -p "Enter mount point or filesystem (e.g., /dev/sda1): " fs
+            echo "Disk usage for $fs:"
+            df -h "$fs"                    # df for specific filesystem
+            ;;
+        6)
+            echo "Total disk usage across all filesystems:"
+            df -h --total                  # df with total summary
+            ;;
+        7)
+            echo "Exiting..."
+            break                          # Exit from the loop
+            ;;
+        *)
+            echo "Invalid choice! Please try again."  # Handle invalid input
+            ;;
+    esac
+
+    echo
+    read -p "Press Enter to continue..."   # Pause before redisplaying menu
+done
+
+#-----------------------------------------------------------
+# HOW TO CREATE AND RUN THIS SCRIPT
+#
+# 1. Create the script file:
+#       nano df_menu.sh
+#
+#    (Paste the entire script into the file)
+#
+#    Save and exit:
+#       Press  CTRL + O   → Enter
+#       Then   CTRL + X   → exit nano
+#
+# 2. Give the script execution permission:
+#       chmod +x df_menu.sh
+#
+# 3. Run the script:
+#       ./df_menu.sh
+#
+#-----------------------------------------------------------

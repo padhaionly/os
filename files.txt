@@ -1,0 +1,114 @@
+#!/bin/bash
+#--------------------------------------------------------------
+#  TOPIC: File & Directory Operations Menu (Bash Script)
+#
+#  WHAT IS THIS SCRIPT?
+#  - A menu-driven shell script that performs common file/
+#    directory operations using Linux commands.
+#
+#  WHAT OPERATIONS ARE SUPPORTED?
+#    1. Create a file  (touch)
+#    2. Create a directory (mkdir)
+#    3. List all files (ls -l)
+#    4. Copy file (cp)
+#    5. Move file (mv)
+#    6. Delete file (rm)
+#    7. Delete directory (rmdir)
+#    8. Exit the program
+#
+#  HOW IT WORKS?
+#  - Displays a menu once at the start.
+#  - Enters an infinite loop asking for user choices.
+#  - Executes corresponding operations using case...esac.
+#  - Exits safely when user selects option 8.
+#--------------------------------------------------------------
+
+echo "Select an Option : "
+echo " 1. create a file"
+echo " 2. create a directory"
+echo " 3. List Files"
+echo " 4. Copy File"
+echo " 5. Move File"
+echo " 6. Delete File"
+echo " 7. Delete Directory"
+echo " 8. Exit"
+
+while true        # Infinite loop to repeatedly show prompt
+do
+    read -p "Enter your choice : " choice   # Read user input
+
+    case $choice in   # Start case statement to match menu option
+
+    1)
+        read -p "Enter File name : " fname  # Ask for filename
+        touch "$fname"                      # Create file
+        echo "File '$fname' is created."
+        ;;
+
+    2)
+        read -p "Enter Dir name : " dirName # Ask for directory name
+        mkdir "$dirName"                    # Create directory
+        echo "Directory '$dirName' is Created"
+        ;;
+
+    3)
+        echo "All Files : "
+        echo
+        ls -l                               # List files in long format
+        ;;
+
+    4)
+        read -p "Enter src : " src          # Source file
+        read -p "Enter dest : " dist        # Destination path/name
+        cp "$src" "$dist"                   # Copy file
+        echo "File copied from Src to Dest"
+        ;;
+
+    5)
+        read -p "Enter src : " src1         # Source file
+        read -p "Enter dest : " dist1       # Destination path/name
+        mv "$src1" "$dist1"                 # Move file
+        echo "File moved successfully"
+        ;;
+
+    6)
+        read -p "Enter file name to Delete : " f1name  # Ask for file
+        rm -f "$f1name"                                # Delete file (force)
+        echo "File '$f1name' is Deleted"
+        ;;
+
+    7)
+        read -p "Enter Dir name to delete : " dir1Name # Ask for directory
+        rmdir "$dir1Name"                               # Delete directory (must be empty)
+        echo "Directory '$dir1Name' is Deleted"
+        ;;
+
+    8)
+        echo "Exiting...."
+        exit                                           # Exit the script
+        ;;
+
+    *)
+        echo "Invalid choice .... "                    # Handle wrong input
+        ;;
+    esac
+
+done
+
+
+#--------------------------------------------------------------
+# HOW TO CREATE AND RUN THIS FILE (IMPORTANT)
+#
+# 1. Create the file:
+#       nano filemenu.sh
+#    (paste the entire script)
+#    Save using: CTRL + O  then  ENTER
+#    Exit using: CTRL + X
+#
+# 2. Give execution permission:
+#       chmod +x filemenu.sh
+#
+# 3. Run the script:
+#       ./filemenu.sh
+#
+#--------------------------------------------------------------
